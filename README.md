@@ -38,3 +38,7 @@ See [instructions.md](instructions.md), then later add your docs to this file.
       # Run tests
       pytest
       ```
+    
+  * ### Docs
+    * http://localhost:8001/docs
+    * [Decision Policy API.postman_collection.json](backend%2Fsrc%2Fdomain%2Fcommon%2Fcontrollers%2Fdocs%2FDecision%20Policy%20API.postman_collection.json)

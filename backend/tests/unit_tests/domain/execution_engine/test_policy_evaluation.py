@@ -28,7 +28,7 @@ def test_validate_invalid_input_values(
     # Assert
     with pytest.raises(ServiceException) as e:
         execution_engine_service.validate_input_values(
-            policy_id=1,
+            policy_id=policy_json["id"],
             input_values=QueryParams(MappingProxyType(
                 {"invalid_variable_name": "any_value"}
             )),
@@ -48,7 +48,7 @@ def test_validate_valid_input_values(
     # Assert
     with does_not_raise_exception():
         execution_engine_service.validate_input_values(
-            policy_id=1,
+            policy_id=policy_json["id"],
             input_values=QueryParams(MappingProxyType(
                 {"age": "any_value"}
             )),
@@ -62,7 +62,7 @@ async def test_policy_evaluation(
 ):
     """
         Policy evaluation is a `async_generator`,
-        this test (similar to a TableDrivenTest) will evaluate:
+        this test (similar to a `TableDrivenTest`) will evaluate:
             - Policy not changed.
             - Policy changed.
             - Input values does not match the policy anymore.

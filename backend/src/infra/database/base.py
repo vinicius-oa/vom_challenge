@@ -1,4 +1,4 @@
-""" Databases drivers must implement this ABC """
+""" Databases drivers must implement this `ABC` """
 from abc import ABC, abstractmethod
 
 from sqlalchemy.orm import declarative_base

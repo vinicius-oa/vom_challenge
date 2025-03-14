@@ -28,7 +28,7 @@ class DI(containers.DeclarativeContainer):
     stream_execution_engine_queue = providers.Singleton(Queue)
 
     # Factories
-    # # Register available databases by importing
+    # # Register available databases by importing them.
     from infra.database.sqlite import SqliteDatabase # noqa
 
     _database_factory = providers.Singleton(DatabaseFactory)

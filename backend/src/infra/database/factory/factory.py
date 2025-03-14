@@ -15,7 +15,7 @@ class DatabaseFactory:
 
     @classmethod
     def register(cls, db_type: SupportedDatabasesEnum):
-        """ Decorator to register a database class with the factory. """
+        """ Decorator to register a database class. """
         def decorator(database_class):
             def initializer():
                 if db_type == SupportedDatabasesEnum.sqlite:

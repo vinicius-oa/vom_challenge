@@ -4,6 +4,7 @@ from pathlib import Path
 import uvicorn
 
 if __name__ == "__main__":
+    # gets log config file path.
     backend_dir = Path(__file__).parent
     log_file_path = str(
         backend_dir.joinpath(

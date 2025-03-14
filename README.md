@@ -1,12 +1,13 @@
 See [instructions.md](instructions.md), then later add your docs to this file.
 
 # Decision Policy API
-
-* ## How to run it:
-  * ### Prerequisites:
+* ## Docs
+  * [README.md](backend%2FREADME.md)
+* ## How to run it
+  * ### Prerequisites
     * Python version: **3.9.x - 3.13.x**
     
-  * ### Steps:
+  * ### Steps
     * ```sh
       # In your OS's terminal e.g. cmd
       cd backend

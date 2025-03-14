@@ -1,0 +1,573 @@
+{
+	"info": {
+		"_postman_id": "275f6250-3d0e-4ef3-aa76-8ce56a7e1d7e",
+		"name": "Decision Policy API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36529273",
+		"_collection_link": "https://backend-v2tec.postman.co/workspace/Team-Workspace~f0fff4e0-3be4-43bf-828b-baef48ebec95/collection/36529273-275f6250-3d0e-4ef3-aa76-8ce56a7e1d7e?action=share&source=collection_link&creator=36529273"
+	},
+	"item": [
+		{
+			"name": "ConfigBackend",
+			"item": [
+				{
+					"name": "Create policy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.id) {",
+									"    pm.collectionVariables.set(",
+									"        \"policy_id\", ",
+									"        jsonData.id",
+									"    )",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"teste\",\n  \"policy_flow\": {\n      \"block_type\": \"start\",\n      \"block_targets\": [\n        {\n          \"block_type\": \"condition\",\n          \"variable_operator\": \">\",\n          \"variable_name\": \"age\",\n          \"variable_value\": 18,\n          \"block_targets\": [\n            {\n              \"block_type\": \"end\",\n              \"flow\": false,\n              \"output\": 0\n            },\n            {\n              \"block_type\": \"condition\",\n              \"variable_operator\": \">\",\n              \"variable_name\": \"income\",\n              \"variable_value\": 1000,\n              \"flow\": true,\n              \"block_targets\": [\n                {\n                  \"block_type\": \"end\",\n                  \"flow\": false,\n                  \"output\": 0\n                },\n                {\n                  \"block_type\": \"end\",\n                  \"flow\": true,\n                  \"output\": 1000\n                }\n              ]\n            }\n          ]\n        }\n      ]\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8001/policy",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"policy"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Nested Condition Blocks (++Depth)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"test3\",\n    \"policy_flow\": {\n        \"block_type\": \"start\",\n        \"block_targets\": [\n            {\n                \"block_type\": \"condition\",\n                \"variable_operator\": \">\",\n                \"variable_name\": \"age\",\n                \"variable_value\": 18,\n                \"block_targets\": [\n                    {\n                        \"block_type\": \"condition\",\n                        \"variable_operator\": \">\",\n                        \"variable_name\": \"parent_years\",\n                        \"variable_value\": \"50\",\n                        \"flow\": false,\n                        \"block_targets\": [\n                            {\n                                \"block_type\": \"condition\",\n                                \"variable_operator\": \">\",\n                                \"variable_name\": \"cousin_years\",\n                                \"variable_value\": \"50\",\n                                \"flow\": false,\n                                \"block_targets\": [\n                                    {\n                                        \"block_type\": \"end\",\n                                        \"flow\": false,\n                                        \"output\": 1\n                                    },\n                                    {\n                                        \"block_type\": \"end\",\n                                        \"flow\": true,\n                                        \"output\": 2\n                                    }\n                                ]\n                            },\n                            {\n                                \"block_type\": \"condition\",\n                                \"variable_operator\": \">\",\n                                \"variable_name\": \"grandparent_years\",\n                                \"variable_value\": \"50\",\n                                \"flow\": true,\n                                \"block_targets\": [\n                                    {\n                                        \"block_type\": \"end\",\n                                        \"flow\": false,\n                                        \"output\": 5\n                                    },\n                                    {\n                                        \"block_type\": \"end\",\n                                        \"flow\": true,\n                                        \"output\": 6\n                                    }\n                                ]\n                            }\n                        ]\n                    },\n                    {\n                        \"block_type\": \"condition\",\n                        \"variable_operator\": \">\",\n                        \"variable_name\": \"income\",\n                        \"variable_value\": 1000,\n                        \"flow\": true,\n                        \"block_targets\": [\n                            {\n                                \"block_type\": \"end\",\n                                \"flow\": false,\n                                \"output\": 3\n                            },\n                            {\n                                \"block_type\": \"end\",\n                                \"flow\": true,\n                                \"output\": 4\n                            }\n                        ]\n                    }\n                ]\n            }\n        ]\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8001/policy",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8001",
+									"path": [
+										"policy"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "date",
+									"value": "Thu, 13 Mar 2025 21:18:43 GMT"
+								},
+								{
+									"key": "server",
+									"value": "uvicorn"
+								},
+								{
+									"key": "content-length",
+									"value": "1009"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"test3\",\n    \"policy_flow\": {\n        \"block_type\": \"start\",\n        \"block_targets\": [\n            {\n                \"block_type\": \"condition\",\n                \"variable_operator\": \">\",\n                \"variable_name\": \"age\",\n                \"variable_value\": 18,\n                \"block_targets\": [\n                    {\n                        \"block_type\": \"condition\",\n                        \"variable_operator\": \">\",\n                        \"variable_name\": \"parent_years\",\n                        \"variable_value\": 50,\n                        \"block_targets\": [\n                            {\n                                \"block_type\": \"condition\",\n                                \"variable_operator\": \">\",\n                                \"variable_name\": \"cousin_years\",\n                                \"variable_value\": 50,\n                                \"block_targets\": [\n                                    {\n                                        \"block_type\": \"end\",\n                                        \"flow\": false,\n                                        \"output\": 1\n                                    },\n                                    {\n                                        \"block_type\": \"end\",\n                                        \"flow\": true,\n                                        \"output\": 2\n                                    }\n                                ],\n                                \"flow\": false\n                            },\n                            {\n                                \"block_type\": \"condition\",\n                                \"variable_operator\": \">\",\n                                \"variable_name\": \"grandparent_years\",\n                                \"variable_value\": 50,\n                                \"block_targets\": [\n                                    {\n                                        \"block_type\": \"end\",\n                                        \"flow\": false,\n                                        \"output\": 5\n                                    },\n                                    {\n                                        \"block_type\": \"end\",\n                                        \"flow\": true,\n                                        \"output\": 6\n                                    }\n                                ],\n                                \"flow\": true\n                            }\n                        ],\n                        \"flow\": false\n                    },\n                    {\n                        \"block_type\": \"condition\",\n                        \"variable_operator\": \">\",\n                        \"variable_name\": \"income\",\n                        \"variable_value\": 1000,\n                        \"block_targets\": [\n                            {\n                                \"block_type\": \"end\",\n                                \"flow\": false,\n                                \"output\": 3\n                            },\n                            {\n                                \"block_type\": \"end\",\n                                \"flow\": true,\n                                \"output\": 4\n                            }\n                        ],\n                        \"flow\": true\n                    }\n                ]\n            }\n        ]\n    },\n    \"id\": 2\n}"
+						},
+						{
+							"name": "Nested Condition Blocks",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"test2\",\n    \"policy_flow\": {\n        \"block_type\": \"start\",\n        \"block_targets\": [\n            {\n                \"block_type\": \"condition\",\n                \"variable_operator\": \">\",\n                \"variable_name\": \"age\",\n                \"variable_value\": 18,\n                \"block_targets\": [\n                    {\n                        \"block_type\": \"condition\",\n                        \"variable_operator\": \">\",\n                        \"variable_name\": \"parent_years\",\n                        \"variable_value\": 50,\n                        \"block_targets\": [\n                            {\n                                \"block_type\": \"end\",\n                                \"flow\": false,\n                                \"output\": 1\n                            },\n                            {\n                                \"block_type\": \"end\",\n                                \"flow\": true,\n                                \"output\": 2\n                            }\n                        ],\n                        \"flow\": false\n                    },\n                    {\n                        \"block_type\": \"condition\",\n                        \"variable_operator\": \">\",\n                        \"variable_name\": \"income\",\n                        \"variable_value\": 1000,\n                        \"block_targets\": [\n                            {\n                                \"block_type\": \"end\",\n                                \"flow\": false,\n                                \"output\": 3\n                            },\n                            {\n                                \"block_type\": \"end\",\n                                \"flow\": true,\n                                \"output\": 4\n                            }\n                        ],\n                        \"flow\": true\n                    }\n                ]\n            }\n        ]\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8001/policy",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8001",
+									"path": [
+										"policy"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "date",
+									"value": "Thu, 13 Mar 2025 21:20:32 GMT"
+								},
+								{
+									"key": "server",
+									"value": "uvicorn"
+								},
+								{
+									"key": "content-length",
+									"value": "642"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"test2\",\n    \"policy_flow\": {\n        \"block_type\": \"start\",\n        \"block_targets\": [\n            {\n                \"block_type\": \"condition\",\n                \"variable_operator\": \">\",\n                \"variable_name\": \"age\",\n                \"variable_value\": 18,\n                \"block_targets\": [\n                    {\n                        \"block_type\": \"condition\",\n                        \"variable_operator\": \">\",\n                        \"variable_name\": \"parent_years\",\n                        \"variable_value\": 50,\n                        \"block_targets\": [\n                            {\n                                \"block_type\": \"end\",\n                                \"flow\": false,\n                                \"output\": 1\n                            },\n                            {\n                                \"block_type\": \"end\",\n                                \"flow\": true,\n                                \"output\": 2\n                            }\n                        ],\n                        \"flow\": false\n                    },\n                    {\n                        \"block_type\": \"condition\",\n                        \"variable_operator\": \">\",\n                        \"variable_name\": \"income\",\n                        \"variable_value\": 1000,\n                        \"block_targets\": [\n                            {\n                                \"block_type\": \"end\",\n                                \"flow\": false,\n                                \"output\": 3\n                            },\n                            {\n                                \"block_type\": \"end\",\n                                \"flow\": true,\n                                \"output\": 4\n                            }\n                        ],\n                        \"flow\": true\n                    }\n                ]\n            }\n        ]\n    },\n    \"id\": 3\n}"
+						},
+						{
+							"name": "With one Condition Block",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"test4\",\n    \"policy_flow\": {\n        \"block_type\": \"start\",\n        \"block_targets\": [\n            {\n                \"block_type\": \"condition\",\n                \"variable_operator\": \">\",\n                \"variable_name\": \"age\",\n                \"variable_value\": 18,\n                \"block_targets\": [\n                    {\n                        \"block_type\": \"end\",\n                        \"flow\": false,\n                        \"output\": 0\n                    },\n                    {\n                        \"block_type\": \"end\",\n                        \"flow\": true,\n                        \"output\": 1000\n                    }\n                ]\n            }\n        ]\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8001/policy",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8001",
+									"path": [
+										"policy"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "date",
+									"value": "Thu, 13 Mar 2025 21:25:05 GMT"
+								},
+								{
+									"key": "server",
+									"value": "uvicorn"
+								},
+								{
+									"key": "content-length",
+									"value": "287"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"test4\",\n    \"policy_flow\": {\n        \"block_type\": \"start\",\n        \"block_targets\": [\n            {\n                \"block_type\": \"condition\",\n                \"variable_operator\": \">\",\n                \"variable_name\": \"age\",\n                \"variable_value\": 18,\n                \"block_targets\": [\n                    {\n                        \"block_type\": \"end\",\n                        \"flow\": false,\n                        \"output\": 0\n                    },\n                    {\n                        \"block_type\": \"end\",\n                        \"flow\": true,\n                        \"output\": 1000\n                    }\n                ]\n            }\n        ]\n    },\n    \"id\": 4\n}"
+						}
+					]
+				},
+				{
+					"name": "Read a Policy",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8001/policy/{{policy_id}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"policy",
+								"{{policy_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read all Policies",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8001/policy",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"policy"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ExecutionEngine",
+			"item": [
+				{
+					"name": "Execute Policy",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8001/execute/policy/{{policy_id}}?age=23&income=3000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8001",
+							"path": [
+								"execute",
+								"policy",
+								"{{policy_id}}"
+							],
+							"query": [
+								{
+									"key": "age",
+									"value": "23"
+								},
+								{
+									"key": "income",
+									"value": "3000"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Nested Condition Blocks",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8001/execute/policy/1?age=17&income=1000.02&parent_years=50",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8001",
+									"path": [
+										"execute",
+										"policy",
+										"1"
+									],
+									"query": [
+										{
+											"key": "age",
+											"value": "17"
+										},
+										{
+											"key": "income",
+											"value": "1000.02"
+										},
+										{
+											"key": "parent_years",
+											"value": "50"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "date",
+									"value": "Thu, 13 Mar 2025 19:58:57 GMT"
+								},
+								{
+									"key": "server",
+									"value": "uvicorn"
+								},
+								{
+									"key": "cache-control",
+									"value": "no-store"
+								},
+								{
+									"key": "connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-accel-buffering",
+									"value": "no"
+								},
+								{
+									"key": "content-type",
+									"value": "text/event-stream; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "data: {\"decision\": 0.0}\r\n"
+						},
+						{
+							"name": "With one Condition Block",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8001/execute/policy/{{policy_id}}?age=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8001",
+									"path": [
+										"execute",
+										"policy",
+										"{{policy_id}}"
+									],
+									"query": [
+										{
+											"key": "age",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "date",
+									"value": "Thu, 13 Mar 2025 21:28:15 GMT"
+								},
+								{
+									"key": "server",
+									"value": "uvicorn"
+								},
+								{
+									"key": "cache-control",
+									"value": "no-store"
+								},
+								{
+									"key": "connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-accel-buffering",
+									"value": "no"
+								},
+								{
+									"key": "content-type",
+									"value": "text/event-stream; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "data: {\"decision\": 0.0}\r\n"
+						},
+						{
+							"name": "Nested Condition Blocks (++Depth)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8001/execute/policy/{{policy_id}}?age=17&parent_years=50&cousin_years=50&grandparent_years=50&income=1000.02",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8001",
+									"path": [
+										"execute",
+										"policy",
+										"{{policy_id}}"
+									],
+									"query": [
+										{
+											"key": "age",
+											"value": "17"
+										},
+										{
+											"key": "parent_years",
+											"value": "50"
+										},
+										{
+											"key": "cousin_years",
+											"value": "50"
+										},
+										{
+											"key": "grandparent_years",
+											"value": "50"
+										},
+										{
+											"key": "income",
+											"value": "1000.02"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "date",
+									"value": "Thu, 13 Mar 2025 21:30:37 GMT"
+								},
+								{
+									"key": "server",
+									"value": "uvicorn"
+								},
+								{
+									"key": "cache-control",
+									"value": "no-store"
+								},
+								{
+									"key": "connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "x-accel-buffering",
+									"value": "no"
+								},
+								{
+									"key": "content-type",
+									"value": "text/event-stream; charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "data: {\"decision\": 1.0}\r\n"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "policy_id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
